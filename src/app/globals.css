@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Kanit:wght@400;500;700&family=Permanent+Marker&display=swap');
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 255, 255, 255;
+  --background-end-rgb: 255, 255, 255;
+  --text-color: #000000;
+}
+
+.dark {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 23, 15, 35;
+  --background-end-rgb: 23, 15, 35;
+  --text-color: #ed0000;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgb(var(--background-end-rgb))
+  )
+  rgb(var(--background-start-rgb));
+  font-family: 'Kanit', sans-serif;
+}
+
+h1, h2, h3 {
+  font-family: 'Permanent Marker', cursive;
+  letter-spacing: 0.5px;
+}
+
+h4, h5, h6 {
+  font-family: 'Bangers', cursive;
+  letter-spacing: 0.5px;
+}
+
+select, input{
+  font-family: Kanit, sans-serif;
+}
+
+.anime-title {
+  font-family: 'Bangers', cursive;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+}
+
+/* ::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ffffff4d;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+} */
+
+/* Smooth page transitions */
+.page-transition-enter {
+  opacity: 0;
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transition: opacity 400ms ease-in-out;
+}
+
+.page-transition-exit {
+  opacity: 1;
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transition: opacity 400ms ease-in-out;
+}
+
+/* Staggered delay utilities */
+.delay-75 {
+  animation-delay: 75ms;
+}
+
+.delay-150 {
+  animation-delay: 150ms;
+}
+
+.delay-300 {
+  animation-delay: 300ms;
+}
