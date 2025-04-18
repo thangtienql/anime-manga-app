@@ -180,7 +180,7 @@ export interface AnimeFilters {
   q?: string;
   page?: number;
   limit?: number;
-  type?: 'tv' | 'movie' | 'ova' | 'special' | 'ona' | 'music';
+  type?: 'tv' | 'movie' | 'ova' | 'special' | 'ona' | 'music' | '';
   status?: 'airing' | 'complete' | 'upcoming';
   rating?: 'g' | 'pg' | 'pg13' | 'r17' | 'r' | 'rx';
   genres?: number[];
@@ -193,7 +193,7 @@ export interface MangaFilters {
   q?: string;
   page?: number;
   limit?: number;
-  type?: 'manga' | 'novel' | 'lightnovel' | 'oneshot' | 'doujin' | 'manhwa' | 'manhua';
+  type?: 'manga' | 'novel' | 'lightnovel' | 'oneshot' | 'doujin' | 'manhwa' | 'manhua' | '';
   status?: 'publishing' | 'complete' | 'hiatus' | 'discontinued' | 'upcoming';
   genres?: number[];
   min_score?: number;

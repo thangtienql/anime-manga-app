@@ -103,6 +103,12 @@ export default function AnimePage() {
   const handleFilterApply = (newFilters: AnimeFilters) => {
     fetchAnime({ ...newFilters, page: 1 });
   };
+  const handleResetFilters = () => {
+    // Tạo một bản sao filters mới với type là 'reset'
+    const resetFilters: AnimeFilters = { ...filters, type:''};
+    setFilters(resetFilters);
+    fetchAnime(resetFilters);
+  };
 
   if (!mounted) {
     return (
@@ -124,6 +130,7 @@ export default function AnimePage() {
       </div>
 
       <FilterPanel 
+        onResetFilters={handleResetFilters}
         type="anime" 
         onApplyFilters={(newFilters) => handleFilterApply(newFilters as AnimeFilters)}
         initialFilters={filters}

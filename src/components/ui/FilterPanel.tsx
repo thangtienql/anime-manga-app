@@ -7,12 +7,14 @@ import { AnimeFilters, MangaFilters, } from "@/lib/api";
 interface FilterPanelProps {
   type: "anime" | "manga";
   onApplyFilters: (filters: AnimeFilters | MangaFilters) => void;
+  onResetFilters?: () => void;
   initialFilters?: AnimeFilters | MangaFilters;
 }
 
 export default function FilterPanel({
   type,
   onApplyFilters,
+  onResetFilters,
   initialFilters = {},
 }: FilterPanelProps) {
   const [filters, setFilters] = useState<AnimeFilters | MangaFilters>(initialFilters);
@@ -34,8 +36,19 @@ export default function FilterPanel({
   );
 
   const handleResetFilters = () => {
-    setFilters({});
-    onApplyFilters({});
+    // Chỉ giữ lại các tham số cơ bản và bỏ các bộ lọc
+    const defaultFilters: AnimeFilters | MangaFilters = {
+      page: 1, // Reset về trang 1
+      limit: initialFilters.limit || 24, // Giữ limit hoặc mặc định là 24
+      q: '' // Giữ query tìm kiếm nếu có
+    };
+    
+    // Reset state nội bộ trước
+    setFilters(defaultFilters);
+    
+    // Thông báo cho component cha biết về việc reset và tải lại dữ liệu
+    // onApplyFilters(defaultFilters);
+    onResetFilters?.();
   };
 
   // Define filter options based on the type (anime or manga)
@@ -173,7 +186,8 @@ export default function FilterPanel({
           <div className="mt-6 flex justify-end gap-2">
             <button
               onClick={handleResetFilters}
-              className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded inline-flex items-center gap-2"
+              className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors duration-200 ease-in-out rounded inline-flex items-center gap-2"
+              aria-label="Reset all filters"
             >
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 

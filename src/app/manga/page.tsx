@@ -100,6 +100,12 @@ export default function MangaPage() {
     fetchManga({ ...newFilters, page: 1 });
   };
 
+  const handleResetFilters = () => {
+    const resetFilters: MangaFilters = { ...filters, type:''};
+    setFilters(resetFilters);
+    fetchManga(resetFilters);
+  };
+
   if (!mounted) {
     return (
       <div className="flex justify-center items-center py-20">
@@ -121,6 +127,7 @@ export default function MangaPage() {
 
       <FilterPanel 
         type="manga" 
+        onResetFilters={handleResetFilters}
         onApplyFilters={(newFilters) => handleFilterApply(newFilters as MangaFilters)}
         initialFilters={filters}
       />
