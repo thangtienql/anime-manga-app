@@ -16,6 +16,7 @@ export default function AnimePage() {
   const [hasNextPage, setHasNextPage] = useState(false);
   const [totalItems, setTotalItems] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const [resetKey, setResetKey] = useState(0);
   const observerTarget = useRef(null);
   const isLoadingMore = useRef(false);
 
@@ -104,9 +105,9 @@ export default function AnimePage() {
 
   const handleResetFilters = () => {
     // Tạo một bản sao filters mới với type là 'reset'
-    const resetFilters: AnimeFilters = { ...filters, type:''};
-    setFilters(resetFilters);
+    const resetFilters: AnimeFilters = { ...filters, q: '', type:'', status:'', rating:'', order_by:''};
     fetchAnime(resetFilters);
+    setResetKey(prev => prev + 1);
   };
 
   if (!mounted) {
@@ -125,6 +126,7 @@ export default function AnimePage() {
           onSearch={handleSearch}
           placeholder="Search for anime..."
           initialValue={filters.q || ""}
+          resetKey={resetKey}
         />
       </div>
 

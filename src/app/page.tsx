@@ -2,11 +2,9 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { getAnime, AnimeFilters, Anime } from "@/lib/api";
-import SearchBar from "@/components/ui/SearchBar";  
+import SearchBar from "@/components/ui/SearchBar";
 import FilterPanel from "@/components/ui/FilterPanel";
 import AnimeCard from "@/components/anime/AnimeCard";
-
-
 export default function AnimePage() {
   const [animeList, setAnimeList] = useState<Anime[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -18,6 +16,7 @@ export default function AnimePage() {
   const [hasNextPage, setHasNextPage] = useState(false);
   const [totalItems, setTotalItems] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const [resetKey, setResetKey] = useState(0);
   const observerTarget = useRef(null);
   const isLoadingMore = useRef(false);
 
@@ -28,24 +27,24 @@ export default function AnimePage() {
 
   const fetchAnime = useCallback(async (newFilters?: AnimeFilters, loadMore = false) => {
     if (!mounted) return;
-    
+
     setIsLoading(true);
     setError(null);
-    
+
     try {
       const currentFilters = { ...filters, ...newFilters };
       const response = await getAnime(currentFilters);
-      
+
       // If loading more, append to existing list, otherwise replace
       if (loadMore) {
         setAnimeList(prev => [...prev, ...response.data]);
       } else {
         setAnimeList(response.data);
       }
-      
+
       setHasNextPage(response.pagination.has_next_page);
       setTotalItems(response.pagination.items.total);
-      
+
       // Update filters with the new ones
       setFilters(currentFilters);
     } catch (err) {
@@ -61,7 +60,7 @@ export default function AnimePage() {
     }
   }, [filters, mounted]);
 
-  // Initial fetch only after component is mounted
+  // Initial fetch only after component is mounted - alternative approach with // eslint-disable-next-line
   useEffect(() => {
     if (mounted) {
       fetchAnime();
@@ -103,11 +102,12 @@ export default function AnimePage() {
   const handleFilterApply = (newFilters: AnimeFilters) => {
     fetchAnime({ ...newFilters, page: 1 });
   };
+
   const handleResetFilters = () => {
     // Tạo một bản sao filters mới với type là 'reset'
-    const resetFilters: AnimeFilters = { ...filters, type:''};
-    setFilters(resetFilters);
+    const resetFilters: AnimeFilters = { ...filters, q: '', type:'', status:'', rating:'', order_by:''};
     fetchAnime(resetFilters);
+    setResetKey(prev => prev + 1);
   };
 
   if (!mounted) {
@@ -122,16 +122,17 @@ export default function AnimePage() {
     <div>
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-6">Explore Anime</h1>
-        <SearchBar 
-          onSearch={handleSearch} 
-          placeholder="Search for anime..." 
+        <SearchBar
+          onSearch={handleSearch}
+          placeholder="Search for anime..."
           initialValue={filters.q || ""}
+          resetKey={resetKey}
         />
       </div>
 
-      <FilterPanel 
-        onResetFilters={handleResetFilters}
-        type="anime" 
+      <FilterPanel
+        onResetFilters={() => handleResetFilters()}
+        type="anime"
         onApplyFilters={(newFilters) => handleFilterApply(newFilters as AnimeFilters)}
         initialFilters={filters}
       />

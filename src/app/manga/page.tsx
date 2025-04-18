@@ -17,6 +17,7 @@ export default function MangaPage() {
   const [hasNextPage, setHasNextPage] = useState(false);
   const [totalItems, setTotalItems] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const [resetKey, setResetKey] = useState(0);
   const observerTarget = useRef(null);
   const isLoadingMore = useRef(false);
 
@@ -101,9 +102,9 @@ export default function MangaPage() {
   };
 
   const handleResetFilters = () => {
-    const resetFilters: MangaFilters = { ...filters, type:''};
-    setFilters(resetFilters);
+    const resetFilters: MangaFilters = { ...filters, q: '', type:'', status:'', order_by:''};
     fetchManga(resetFilters);
+    setResetKey(prev => prev + 1);
   };
 
   if (!mounted) {
@@ -119,9 +120,10 @@ export default function MangaPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-6">Explore Manga</h1>
         <SearchBar 
-          onSearch={handleSearch} 
-          placeholder="Search for manga..." 
+          onSearch={handleSearch}
+          placeholder="Search for anime..."
           initialValue={filters.q || ""}
+          resetKey={resetKey}
         />
       </div>
 

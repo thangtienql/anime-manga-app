@@ -181,11 +181,11 @@ export interface AnimeFilters {
   page?: number;
   limit?: number;
   type?: 'tv' | 'movie' | 'ova' | 'special' | 'ona' | 'music' | '';
-  status?: 'airing' | 'complete' | 'upcoming';
-  rating?: 'g' | 'pg' | 'pg13' | 'r17' | 'r' | 'rx';
+  status?: 'airing' | 'complete' | 'upcoming' | '';
+  rating?: 'g' | 'pg' | 'pg13' | 'r17' | 'r' | 'rx' | '';
   genres?: number[];
   min_score?: number;
-  order_by?: 'title' | 'start_date' | 'end_date' | 'score' | 'rank' | 'popularity';
+  order_by?: 'title' | 'start_date' | 'end_date' | 'score' | 'rank' | 'popularity' | '';
   sort?: 'desc' | 'asc';
 }
 
@@ -194,10 +194,10 @@ export interface MangaFilters {
   page?: number;
   limit?: number;
   type?: 'manga' | 'novel' | 'lightnovel' | 'oneshot' | 'doujin' | 'manhwa' | 'manhua' | '';
-  status?: 'publishing' | 'complete' | 'hiatus' | 'discontinued' | 'upcoming';
+  status?: 'publishing' | 'complete' | 'hiatus' | 'discontinued' | 'upcoming' | '';
   genres?: number[];
   min_score?: number;
-  order_by?: 'title' | 'start_date' | 'end_date' | 'score' | 'rank' | 'popularity';
+  order_by?: 'title' | 'start_date' | 'end_date' | 'score' | 'rank' | 'popularity' | '';
   sort?: 'desc' | 'asc';
 }
 

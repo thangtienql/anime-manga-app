@@ -1,19 +1,26 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
   placeholder?: string;
   initialValue?: string;
+  resetKey?: number;
 }
 
 export default function SearchBar({ 
   onSearch, 
   placeholder = "Search...", 
-  initialValue = ""
+  initialValue = "",
+  resetKey = 0
 }: SearchBarProps) {
   const [query, setQuery] = useState(initialValue);
+
+  // Reset query when resetKey changes
+  useEffect(() => {
+    setQuery(initialValue);
+  }, [initialValue, resetKey]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
